@@ -162,7 +162,15 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private void createAccount(View view) {
+    void createAccount(View view) {
+
+
+        System.out.println("Registration");
+
+
+        Intent intent = new Intent(getApplicationContext(), Registration.class);
+
+        startActivity(intent);
 
 
     }
