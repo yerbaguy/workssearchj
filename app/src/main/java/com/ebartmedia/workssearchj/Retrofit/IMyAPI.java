@@ -11,6 +11,10 @@ public interface IMyAPI {
 
 
 
-    @GET("api/getloginresult")
+//    @GET("api/getresult")
+//    Observable<List<LoginResult>> getLoginResult();
+
+
+    @GET("api/getotherresult")
     Observable<List<LoginResult>> getLoginResult();
 }

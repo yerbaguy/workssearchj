@@ -1,10 +1,8 @@
 package com.ebartmedia.workssearchj;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,64 +12,50 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
-import com.ebartmedia.workssearchj.Model.LoginResult;
-import com.ebartmedia.workssearchj.Retrofit.IMyAPI;
-import com.ebartmedia.workssearchj.Retrofit.RetrofitClient;
-
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-
-public class MainActivity extends AppCompatActivity
+public class Login extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView textViewLogin, textViewCreateAccount;
 
-    NavigationView navigationView;
-
-    IMyAPI iMyAPI;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-
+    EditText username, password;
+    Button login;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        Retrofit retrofit = RetrofitClient.getInstance();
-        iMyAPI = retrofit.create(IMyAPI.class);
 
-      //  fetchData();
-
-
-
-//        textViewLogin = findViewById(R.id.textViewLogin);
-        textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
+        login = (Button) findViewById(R.id.buttonLogin);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
 
 
-//        View header = navigationView.getHeaderView(0);
-//        textViewLogin = (TextView) header.findViewById(R.id.textViewLogin);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("Login");
+
+
+                String usern = username.getText().toString();
+                String passwd = password.getText().toString();
+
+                System.out.println("Login - usern" + usern);
+                System.out.println("Login - passwd" + passwd);
 
 
 
-//        textViewLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                System.out.println("Login");
-//
-//            }
-//        });
+
+            }
+        });
+
 
 
 
@@ -95,102 +79,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
-
-    private void fetchData() {
-
-        compositeDisposable.add(iMyAPI.getLoginResult()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Consumer<List<LoginResult>>() {
-            @Override
-            public void accept(List<LoginResult> loginResults) throws Exception {
-
-                displayData(loginResults);
-            }
-        }));
-
-
-    }
-
-    private void displayData(List<LoginResult> loginResults) {
-
-        String username = "";
-        Boolean success = false;
-
-        Log.d("displayData", "displayData");
-
-
-        username = loginResults.get(0).getUsername();
-        success = loginResults.get(0).getSuccess();
-
-        Log.d("displayData", "displayData" + username);
-        Log.d("displayData", "displayData" + success);
-
-
-
-    }
-
-
-
-//    private void toLogin(View view) {
-//
-//        textViewLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                System.out.println("login");
-//
-//            }
-//        });
-//
-//
-//    }
-
-
-
-//    private void onClickCreateLogin(View v) {
-//
-//        textViewLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                System.out.println("Login");
-//            }
-//        });
-//    }
-
-
-
-    private void createAccount(View view) {
-
-
-    }
-
-
-    void createLogin(View view) {
-
-
-        System.out.println("Login");
-
-
-        Intent intent = new Intent(getApplicationContext(), Login.class);
-
-        startActivity(intent);
-
-
-    }
-
-
-
-    @Override
-    protected void onStop() {
-
-        compositeDisposable.clear();
-        super.onStop();
-    }
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -204,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.login, menu);
         return true;
     }
 
