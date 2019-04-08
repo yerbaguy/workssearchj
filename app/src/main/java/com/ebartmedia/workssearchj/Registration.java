@@ -12,9 +12,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.ebartmedia.workssearchj.Retrofit.RetrofClient;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Registration extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    EditText username, email, password;
+    Button buttonRegistration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +39,77 @@ public class Registration extends AppCompatActivity
         setContentView(R.layout.activity_registration);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        username = (EditText) findViewById(R.id.username);
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+
+        buttonRegistration = (Button) findViewById(R.id.buttonRegistration);
+
+
+
+        buttonRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                System.out.println("Registration");
+
+
+                String usern = "";
+                String em = "";
+                String passwd = "";
+
+
+                usern = username.getText().toString();
+                em = email.getText().toString();
+                passwd = password.getText().toString();
+
+
+                System.out.println("Registration - usern" + usern);
+                System.out.println("Registration - em" + em);
+                System.out.println("Registration - passwd" + passwd);
+
+
+                Call<ResponseBody> call = RetrofClient
+                        .getInstance()
+                        .getApi()
+                        .createUser(usern, em, passwd);
+
+                call.enqueue(new Callback<ResponseBody>() {
+
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+                        try {
+                            String s = response.body().string();
+
+                        } catch(IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
+
+            }
+        });
+
+
+
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
