@@ -38,6 +38,15 @@ public interface Api {
 
     );
 
+  //  @FormUrlEncoded
+    @POST("api/tologout")
+    Call<ResponseBody> logoutUser(
+
+//            @Field("username") String username,
+//            @Field("success") short success
+
+    );
+
 
 
 }

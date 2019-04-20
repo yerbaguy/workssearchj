@@ -41,4 +41,10 @@ public class RetrofClient {
 //        return retrofit.create(IMyAPI.class);
 //    }
 
+
+    public Api logoutUser() {
+
+        return retrofit.create(Api.class);
+    }
+
 }

@@ -4,11 +4,18 @@ public class LoginResult {
 
 
     private int id;
-    private Boolean success;
+  //  private Boolean success;
+    private short success;
     private String username;
 
-    public LoginResult(int id, Boolean success, String username) {
+    public LoginResult(int id, short success, String username) {
         this.id = id;
+        this.success = success;
+        this.username = username;
+    }
+
+    public LoginResult(short success, String username) {
+       // this.id = id;
         this.success = success;
         this.username = username;
     }
@@ -18,7 +25,7 @@ public class LoginResult {
         this.id = id;
     }
 
-    public void setSuccess(Boolean success) {
+    public void setSuccess(short success) {
         this.success = success;
     }
 
@@ -30,7 +37,7 @@ public class LoginResult {
         return id;
     }
 
-    public Boolean getSuccess() {
+    public short getSuccess() {
         return success;
     }
 

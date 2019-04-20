@@ -14,17 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ebartmedia.workssearchj.Interfaces.Api;
 import com.ebartmedia.workssearchj.Model.LoginResult;
 import com.ebartmedia.workssearchj.Model.UserLocalStore;
 import com.ebartmedia.workssearchj.Retrofit.IMyAPI;
 import com.ebartmedia.workssearchj.Retrofit.RetrofClient;
 import com.ebartmedia.workssearchj.Retrofit.RetrofitClient;
-import com.ebartmedia.workssearchj.Retrofit.RetrofittClient;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,74 +36,51 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class Login extends AppCompatActivity
+public class LoggedIn extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    TextView textViewLoggedIn, logout;
 
-    EditText username, password;
-    Button login;
+    UserLocalStore userLocalStore;
 
     IMyAPI iMyAPI;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    UserLocalStore userLocalStore;
-
-//    IMyAPI iMyAPI;
-//    Api api;
-//    CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_logged_in);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
+        textViewLoggedIn = (TextView) findViewById(R.id.textView3);
+        logout = (TextView) findViewById(R.id.button);
 
-        login = (Button) findViewById(R.id.buttonLogin);
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
+
+        userLocalStore = new UserLocalStore(this);
+
+        String username = "";
+
+        username = userLocalStore.getLoggedInUser().getUsername();
+
+        textViewLoggedIn.setText(username);
 
 
         Retrofit retrofit = RetrofitClient.getInstance();
         iMyAPI = retrofit.create(IMyAPI.class);
 
-//        Retrofit retrofit = RetrofitClient.getInstance();
-//        iMyAPI = retrofit.create(IMyAPI.class);
 
 
-//        Retrofit retrofit = RetrofClient.getInstance();
-//        api = retrofit.create(Api.class);
-
-
-      //  fetchData();
-
-
-        login.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                System.out.println("Login");
 
-
-                String usern = username.getText().toString();
-                String passwd = password.getText().toString();
-
-                System.out.println("Login - usern" + usern);
-                System.out.println("Login - passwd" + passwd);
-
-
-     //       }
-      //  });
-
-
-                Call<ResponseBody> call = RetrofittClient
+                Call<ResponseBody> call = RetrofClient
                         .getInstance()
                         .getApi()
-                        .checkUser(usern, passwd);
+                        .logoutUser();
 
 
 
@@ -123,6 +97,7 @@ public class Login extends AppCompatActivity
                         } catch(IOException e) {
                             e.printStackTrace();
                         }
+
                     }
 
                     @Override
@@ -135,8 +110,10 @@ public class Login extends AppCompatActivity
 
 
 
+
             }
         });
+
 
 
 
@@ -164,7 +141,8 @@ public class Login extends AppCompatActivity
 
     private void fetchData() {
 
-        compositeDisposable.add(iMyAPI.getLoginResult()
+
+        compositeDisposable.add(iMyAPI.fromlogoutUser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<LoginResult>>() {
@@ -178,49 +156,27 @@ public class Login extends AppCompatActivity
 
     }
 
+
     private void displayData(List<LoginResult> loginResults) {
 
-        String username = "";
-       // Boolean success = false;
 
         userLocalStore = new UserLocalStore(this);
 
         short success;
 
-
-
-        Log.d("displayData", "displayData");
-
-
-        username = loginResults.get(0).getUsername();
         success = loginResults.get(0).getSuccess();
 
-        Log.d("displayData", "displayData" + username);
         Log.d("displayData", "displayData" + success);
 
 
+        if (success == 0) {
 
-        if ( success == 1) {
-
-
-            LoginResult loginResult = new LoginResult(success, username);
-
-
-            Log.d("displayData - insuccess", "displayData - insuccess" + username);
-            Log.d("displayData - insuccess", "displayData - insuccess" + success);
-
-
-            userLocalStore.storeUserData(loginResult);
-         //   userLocalStore.setUserLoggedIn(true);
-            userLocalStore.setUserLoggedIn(1);
-
-            Intent intent = new Intent(getApplicationContext(), LoggedIn.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
             startActivity(intent);
         } else {
 
             Toast.makeText(getApplicationContext(), "No", Toast.LENGTH_SHORT).show();
-
         }
 
 
@@ -230,9 +186,7 @@ public class Login extends AppCompatActivity
 
 
 
-
-
-    @Override
+        @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -245,7 +199,7 @@ public class Login extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
+        getMenuInflater().inflate(R.menu.logged_in, menu);
         return true;
     }
 

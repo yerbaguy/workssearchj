@@ -33,4 +33,8 @@ public interface IMyAPI {
 
     @GET("api/getotherresult")
     Observable<List<LoginResult>> getLoginResult();
+
+    @GET("api/fromlogout")
+    Observable<List<LoginResult>> fromlogoutUser();
+
 }

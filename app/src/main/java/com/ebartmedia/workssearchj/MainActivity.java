@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +118,10 @@ public class MainActivity extends AppCompatActivity
     private void displayData(List<LoginResult> loginResults) {
 
         String username = "";
-        Boolean success = false;
+       // Boolean success = false;
+        short success;
+
+
 
         Log.d("displayData", "displayData");
 
