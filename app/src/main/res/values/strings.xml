@@ -9,4 +9,7 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_logged_in">LoggedIn</string>
+    <string name="title_activity_pull_the_word">PullTheWord</string>
+    <string name="title_activity_add_word">AddWord</string>
+    <string name="title_activity_show_word">ShowWord</string>
 </resources>

@@ -4,27 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
-
-        <item
-            android:id="@+id/addword"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Add Word" />
-
-
-        <item
-            android:id="@+id/pulltheword"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Pull The Word" />
-
-
-        <item
-            android:id="@+id/showword"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Show Word" />
-
-
-
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"

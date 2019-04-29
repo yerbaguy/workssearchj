@@ -1,5 +1,6 @@
 package com.ebartmedia.workssearchj;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ebartmedia.workssearchj.Model.LoginResult;
 import com.ebartmedia.workssearchj.Retrofit.IMyAPI;
@@ -63,6 +65,19 @@ public class MainActivity extends AppCompatActivity
 
 //        View header = navigationView.getHeaderView(0);
 //        textViewLogin = (TextView) header.findViewById(R.id.textViewLogin);
+
+
+
+//        addword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(getApplicationContext(), AddWord.class);
+//
+//                startActivity(intent);
+//
+//            }
+//        });
 
 
 
@@ -242,7 +257,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.addword) {
+
+
+                    Intent intent = new Intent(getApplicationContext(), AddWord.class);
+
+                    startActivity(intent);
+
+//            Toast.makeText(this, "Thie is Main Page", Toast.LENGTH_SHORT).show();
+
+
+
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
